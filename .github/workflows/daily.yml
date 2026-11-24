@@ -1,0 +1,61 @@
+name: 每日涨星快照 + Pages 发布
+
+on:
+  schedule:
+    # GitHub Actions 的 cron 用 UTC；20:00 UTC = 北京时间次日 04:00
+    - cron: '0 20 * * *'
+  workflow_dispatch:  # 允许在 Actions 页面手动点跑
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# 同一时间只允许一个实例运行，避免补跑与定时撞车
+concurrency:
+  group: forge-pulse-daily
+  cancel-in-progress: false
+
+jobs:
+  pulse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 采集并生成看板
+        env:
+          # main.py 在配置 token 为空时会读取该环境变量，获得 5000 次/小时配额
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python src/main.py --all
+
+      - name: 提交数据快照与看板
+        run: |
+          git config user.name "forge-pulse-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -f data docs
+          if git diff --cached --quiet; then
+            echo "无数据变化，跳过提交"
+          else
+            git commit -m "chore: 每日涨星快照 $(date -u +%F)"
+            git push
+          fi
+
+      - name: 配置 Pages
+        uses: actions/configure-pages@v5
+
+      - name: 上传看板为 Pages 产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs
+
+      - name: 发布到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,27 @@
+# 固定追踪清单：每行一个仓库，格式为 平台:owner/repo
+# 不写平台前缀默认 github。以 # 开头的是注释。
+# 每天都会拍快照，无论它是否出现在 Trending / 探索榜里。
+
+# ---- GitHub（种子示例，可随意增删）----
+microsoft/markitdown
+torvalds/linux
+facebook/react
+vercel/next.js
+openai/whisper
+
+# ---- GitLab ----
+gitlab:gitlab-org/gitlab
+gitlab:inkscape/inkscape
+
+# ---- Gitee（已实测 API 可用）----
+gitee:jeelowcode/JeeLowCode
+gitee:lvyeyou/DaShuJuZhiDaPingZhanShi
+gitee:oschina/git-osc
+gitee:iflytek/astron-rpa
+gitee:iflytek/astron-agent
+gitee:BidingCC/BuildingAI
+gitee:ghosthack/xiaozhi-esp32
+gitee:HuLaSpark/HuLa
+gitee:yubaolee/StarGantt
+gitee:arvinlovegood_admin/go-stock
+gitee:orginone/oiocns-react

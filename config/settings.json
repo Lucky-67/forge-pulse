@@ -1,0 +1,32 @@
+{
+  "github": {
+    "enabled": true,
+    "token": "",
+    "trending_enabled": true,
+    "trending_window": "daily",
+    "trending_limit": 30,
+    "search_enabled": false,
+    "search_lookback_days": 14,
+    "search_min_stars": 100,
+    "search_limit": 30
+  },
+  "gitlab": {
+    "enabled": true,
+    "top_n": 40
+  },
+  "gitee": {
+    "enabled": true
+  },
+  "network": {
+    "timeout_seconds": 20,
+    "retries": 2,
+    "request_gap_seconds": 0.15,
+    "max_wait_seconds": 600
+  },
+  "board": {
+    "history_days": 30,
+    "sparkline_days": 14,
+    "top_n": 50,
+    "tz_offset_hours": 8
+  }
+}
